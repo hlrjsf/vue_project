@@ -1,0 +1,391 @@
+<template>
+  <div class="Main">
+    <div class="secondary_head">
+      <div class="header_title">{{goodsName}}</div>
+    </div>
+    <div id="wrapper">
+      <div id="scroller">
+        <div id="pullDown">
+          <span class="pullDownIcon"></span>
+          <span class="pullDownLabel">下拉刷新...</span>
+        </div>
+        <div class="content_mian">
+          <div class="flash clear">
+            <swiper :options="swiperOption" class="swiper-box">
+              <swiper-slide class="swiper-item"><img :src="banner01"></swiper-slide>
+              <swiper-slide class="swiper-item"><img :src="banner02"></swiper-slide>
+              <swiper-slide class="swiper-item"><img :src="banner03"></swiper-slide>
+              <swiper-slide class="swiper-item"><img :src="banner04"></swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+          </div>
+          <div class="goods_infs b_fff">
+            <div class="infs_list">
+              <div class="goods_name">{{goodsName}}</div>
+              <div class="goods_price">
+                <span class="n_price">￥{{nowPrice}}</span>
+                <span class="o_price">￥{{oldPrice}}</span>
+              </div>
+            </div> 
+            <div class="infs_list">
+              <div class="brand">
+                <span>{{Brand}}</span>
+                <span>{{brandName}}</span>
+              </div>
+            </div>
+            <div class="infs_list">
+              <div class="norm">
+                <span>{{Norm}}</span>
+                <span>{{normContent}}</span>
+              </div>
+            </div>
+            <div class="infs_list">
+              <div class="taste">{{Taste}}</div>
+              <div class="taste_list">
+                <ul>
+                  <li v-for="(item, $index) in items" @click="selectSort($event, 
+                  $index)" :class="{'active':nowIndex==$index}">{{item.sort}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="flash_send">
+            <img :src="sendLogo">
+          </div>
+        </div>
+        <div id="pullUp">
+          <span class="pullUpIcon"></span>
+          <span class="pullUpLabel">上拉加载更多...</span>
+        </div>
+      </div>
+    </div>
+    <div class="add_cart">
+      <div class="blank">
+        <span>{{addToCart}}</span>
+        <span class="reduce">
+          <img :src="Reduce" @click="reduceNum">
+        </span>
+        <span class="num">
+          <input type="text" v-model="numValue" />
+        </span>
+        <span class="add" @click="addNum">
+          <img :src="Add">
+        </span>
+      </div>
+      <div class="add_cart_btn"></div>  
+      <div class="add_cart_icon" @click="goCart">
+        <img :src="addCart">
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import Vue from 'vue'
+export default {
+  name: 'personCenter',
+  data () {
+    return {
+      goodsName: '合味道XO酱海鲜风味面',
+      /*------轮播图Start------*/
+      banner01: '../static/img/goods_detail_pic01.png',
+      banner02: '../static/img/goods_detail_pic02.png',
+      banner03: '../static/img/goods_detail_pic03.png',
+      banner04: '../static/img/goods_detail_pic04.png',
+      swiperOption: {
+        pagination: '.swiper-pagination',
+        direction: 'horizontal',//水平轮播， vertical为垂直方向
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 30,
+        mousewheelControl: true,
+        autoplay: 2000
+      },
+      /*------轮播图End------*/
+      nowPrice: '5',
+      oldPrice: '6',
+      Brand: '品牌',
+      brandName: '日清',
+      Norm: '规格',
+      normContent: '87g',
+      Taste: '口味',
+      items: [
+　　　　{sort:'海鲜风味'},
+　　　　{sort:'猪骨浓汤风味'},
+　　　　{sort:'意大利牛肉风味'},
+　　　　{sort:'香辣牛肉风味'},
+        {sort:'五香牛肉风味'},
+　　　　{sort:'麻辣牛肉风味'},
+        {sort:'虾仁风味'},
+　　　　{sort:'咖喱牛肉风味'}
+　　　],
+      nowIndex: 'null',
+      styles: 'unactive',
+      sendLogo: '../static/img/send_logo.png',
+      addCart: '../static/img/add_cart.png',
+      addToCart: '添加商品：',
+      Reduce: '../static/img/reduce.png',
+      Add: '../static/img/add.png',
+      numValue: 0
+    }
+  },
+  methods: {
+    selectSort:function(event, num){
+      var toggle = event.currentTarget;
+      this.nowIndex = num;
+      this.numValue = 1;
+    },
+    reduceNum: function(){
+      if(this.numValue){
+        this.numValue --;
+      }
+    },
+    addNum: function(){
+      this.numValue ++;
+    },
+    goCart: function() {
+      if(this.numValue > 0){
+        //vue router配置的动态路由，页面无法自动刷新
+        this.$router.push({path: '/shoppingCart'});
+        //刷新页面
+        this.$router.go(0);
+      }else{
+        alert('您尚未选择商品数量，请选择！');
+      } 
+    }
+  }
+}
+var myScroll,
+    pullDownEl, pullDownOffset,
+    pullUpEl, pullUpOffset,
+    generatedCount = 0;
+
+    /**
+     * 下拉刷新 （自定义实现此方法）
+     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction () {
+        setTimeout(function () {     //setTimeout，调试作用，实际由Ajax请求数据
+            myScroll.refresh();     //数据加载完成后，调用界面更新方法 
+        }, 1000);
+    }
+
+    /**
+     * 滚动翻页 （自定义实现此方法）
+     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
+     */
+        function pullUpAction () {
+            setTimeout(function () {    //setTimeout，调试作用，实际由Ajax请求数据
+                myScroll.refresh();     // 数据加载完成后，调用界面更新方法
+            }, 1000);   
+        }
+
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');   
+        pullUpOffset = pullUpEl.offsetHeight;
+
+        myScroll = new iScroll('wrapper', {
+            scrollbarClass: 'myScrollbar', /* 重要样式 */
+            useTransition: false, /* 此属性不知用意，本人从true改为false */
+            topOffset: pullDownOffset,
+            onRefresh: function () {
+                if (pullDownEl.className.match('loading')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                } else if (pullUpEl.className.match('loading')) {
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                }
+            },
+            onScrollMove: function () {
+                if (this.y > 5 && !pullDownEl.className.match('flip')) {
+                    pullDownEl.className = 'flip';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
+                    this.minScrollY = 0;
+                } else if (this.y < 5 && pullDownEl.className.match('flip')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                    this.minScrollY = -pullDownOffset;
+                } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+                    pullUpEl.className = 'flip';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
+                    this.maxScrollY = this.maxScrollY;
+                } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    this.maxScrollY = pullUpOffset;
+                }
+            },
+            onScrollEnd: function () {
+                if (pullDownEl.className.match('flip')) {
+                    pullDownEl.className = 'loading';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';                
+                    pullDownAction();   // Execute custom function (ajax call?)
+                } else if (pullUpEl.className.match('flip')) {
+                    pullUpEl.className = 'loading';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';                
+                    pullUpAction(); // Execute custom function (ajax call?)
+                }
+            }
+        });
+    }
+
+    //初始化绑定iScroll控件 
+    document.addEventListener('touchmove', function (e) {
+      e.preventDefault(); 
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+    body{
+      background: #f1f1f1;
+    }
+   .secondary_head{
+      border-bottom: 1px solid #ccc;
+      background: #fff;
+   }
+   .header_title{
+      position: relative;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+   }
+   .header_title:before{
+      display: inline-block;
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 50px;
+      height: 50px;
+      background: url(../images/Back.png) no-repeat center center #fff;
+      background-size: 8px 16px;
+   }
+   .header_title:after{
+      display: inline-block;
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 50px;
+      height: 50px;
+      background: url(../images/share.png) no-repeat center center #fff;
+      background-size: 30px 30px;
+   }
+
+   /*----------------------------轮播图----------------------*/
+  .flash{
+    height: 10rem;
+    border-bottom: 1px solid #ccc;
+  }
+  .n_price{
+    font-size: 1.2rem;
+    color: #e8470e;
+  }
+  .o_price{ 
+    color: #777;
+    text-decoration: line-through;
+  }
+/* --------------------------------------------------- */
+.goods_infs{
+  margin-bottom: 10px;
+}
+.infs_list{
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+}
+.infs_list:last-child{
+  border-bottom: none;
+}
+.infs_list span{
+  padding-right: 10px;
+}
+.brand span:first-child, .norm span:first-child, .taste{
+  color: #777;
+}
+.taste{
+  margin-bottom: 10px;
+}
+.taste_list li{
+  display: inline-block;
+  margin: 0 10px 10px 0;
+  padding: 5px 10px;
+  color: #303030;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.taste_list li.active{
+  color: #fea31e;
+  border: 1px solid #fea31e;
+}
+.flash_send{
+  height: 10rem;
+  margin-bottom: 10px;
+}
+.footer{
+  display: none;
+}
+.add_cart{
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  left: 0;
+  bottom: 0;
+  border-top: 1px solid #ccc;
+  background: #fff; 
+  z-index: 5;
+}
+.blank{
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  z-index: 3;
+}
+.add_cart_btn{
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  right: 10px;
+  bottom: 0;
+  border: 1px solid #ccc;
+  border-radius: 100%;
+  background: #fff;
+  z-index: 2;
+}
+.add_cart_icon{
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  right: 16px;
+  bottom: 8px;
+  z-index: 4;
+}
+.blank{
+  padding-left: 10px;
+}
+.blank span{
+  display: inline-block;
+  vertical-align: middle;
+}
+.reduce, .add{
+  width: 40px;
+  height: 40px;
+}
+.blank input{
+  width: 40px;
+  height: 25px;
+  height: 25px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+</style>
