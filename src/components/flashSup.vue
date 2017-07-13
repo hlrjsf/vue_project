@@ -44,7 +44,6 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
 export default {
   name: 'flashSup',
   data () {
@@ -104,7 +103,6 @@ export default {
   },
   methods: {
     selectStyle:function(event, num){
-      var toggle = event.currentTarget;
       this.nowIndex = num;
     }
   }

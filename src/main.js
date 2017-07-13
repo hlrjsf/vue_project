@@ -8,7 +8,6 @@ import './styles/common.css'
 import './styles/scrollbar.css'
 import iscroll from './js/iscroll'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-//import Scroller from 'vue-scroller'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)

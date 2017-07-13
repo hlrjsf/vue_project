@@ -11,7 +11,7 @@
           <span class="pullDownLabel">下拉刷新...</span>
         </div>
         <div class="content_mian">
-          <div class="cart_list oh" v-for="(item,index) in productList">
+          <div class="cart_list oh" v-for="(item, index) in productList">
             <div class="ckeck_btn"></div>
             <div class="goods_infs">
               <div class="goods_pic">
@@ -29,9 +29,9 @@
                 <div class="goods_price">
                   <span class="now_price">￥{{item.productNowPrice}}</span>
                   <span class="old_price">￥{{item.productOldPrice}}</span>
-                  
                 </div>
                 <div class="goods_num">
+                  数量：
                   <span class="reduce">
                     <img :src="Reduce" @click="reduceNum">
                   </span>
@@ -57,12 +57,13 @@
         订单小计：
         <input v-model="orderSubtotal" disabled="disabled" />
       </span>
-      <span class="go_account">去结算</span>
+      <a href="orderSettlement">
+        <span class="go_account">去结算</span>
+      </a>
     </div>
   </div>
 </template>
 <script>
-import Vue from 'vue'
 export default {
   name: 'personCenter',
   data () {
@@ -78,7 +79,8 @@ export default {
           productTaste: '海鲜风味',
           productNowPrice:'5.5',
           productOldPrice:'6',
-          productNum: '2',  
+          productNum: '2', 
+          flag: 'null' 
         },
         {
           productImage:'../static/img/cart_goods.png', 
@@ -88,7 +90,8 @@ export default {
           productTaste: '海鲜风味',
           productNowPrice:'5.5',
           productOldPrice:'6',
-          productNum: '2',  
+          productNum: '2', 
+          flag: 'null'  
         },
         {
           productImage:'../static/img/cart_goods.png', 
@@ -98,7 +101,8 @@ export default {
           productTaste: '海鲜风味',
           productNowPrice:'5.5',
           productOldPrice:'6',
-          productNum: '2',  
+          productNum: '2',
+          flag: 'null'   
         },
         {
           productImage:'../static/img/cart_goods.png', 
@@ -108,7 +112,8 @@ export default {
           productTaste: '海鲜风味',
           productNowPrice:'5.5',
           productOldPrice:'6',
-          productNum: '2',  
+          productNum: '2',
+          flag: 'null'   
         },
         {
           productImage:'../static/img/cart_goods.png', 
@@ -118,15 +123,24 @@ export default {
           productTaste: '海鲜风味',
           productNowPrice:'5.5',
           productOldPrice:'6',
-          productNum: '2',  
+          productNum: '2',
+          flag: 'null'   
         }
       ],
       Reduce: '../static/img/reduce.png',
       Add: '../static/img/add.png',
       orderSubtotal: '1234',
+      nowIndex: 'null'
     }
   },
   methods: {
+    reduceNum: function(event){
+      //console.log(event.target);
+      //console.log(this.Reduce);
+    },
+    addNum: function(){
+      // this.item.productNum ++;
+    }
   }
 }
 var myScroll,

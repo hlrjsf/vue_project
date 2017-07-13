@@ -1,7 +1,13 @@
 <template>
   <div class="Main">
     <div class="secondary_head">
+      <div class="go_back">
+        <a href="#"><img :src="goBack" alt=""></a>
+      </div>
       <div class="header_title">{{goodsName}}</div>
+      <div class="go_cart">
+        <a href="#"><img :src="goCart" alt=""></a>
+      </div>
     </div>
     <div id="wrapper">
       <div id="scroller">
@@ -43,8 +49,7 @@
               <div class="taste">{{Taste}}</div>
               <div class="taste_list">
                 <ul>
-                  <li v-for="(item, $index) in items" @click="selectSort($event, 
-                  $index)" :class="{'active':nowIndex==$index}">{{item.sort}}</li>
+                  <li v-for="(item, index) in items" @click="selectSort($event, index)" :class="{'active':nowIndex==index}">{{item.sort}}</li>
                 </ul>
               </div>
             </div>
@@ -80,11 +85,12 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
 export default {
   name: 'personCenter',
   data () {
     return {
+      goBack: '../static/img/Back.png',
+      goCart: '../static/img/Cart.png',
       goodsName: '合味道XO酱海鲜风味面',
       /*------轮播图Start------*/
       banner01: '../static/img/goods_detail_pic01.png',
@@ -130,13 +136,14 @@ export default {
   },
   methods: {
     selectSort:function(event, num){
-      var toggle = event.currentTarget;
       this.nowIndex = num;
       this.numValue = 1;
     },
     reduceNum: function(){
-      if(this.numValue){
+      if(this.numValue > 1){
         this.numValue --;
+      }else{
+        this.numValue = 1;
       }
     },
     addNum: function(){
@@ -149,7 +156,7 @@ export default {
         //刷新页面
         this.$router.go(0);
       }else{
-        alert('您尚未选择商品数量，请选择！');
+        alert('您尚未选择商品，请选择！');
       } 
     }
   }
@@ -256,28 +263,6 @@ var myScroll,
       height: 50px;
       line-height: 50px;
       text-align: center;
-   }
-   .header_title:before{
-      display: inline-block;
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 50px;
-      height: 50px;
-      background: url(../images/Back.png) no-repeat center center #fff;
-      background-size: 8px 16px;
-   }
-   .header_title:after{
-      display: inline-block;
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 50px;
-      height: 50px;
-      background: url(../images/share.png) no-repeat center center #fff;
-      background-size: 30px 30px;
    }
 
    /*----------------------------轮播图----------------------*/

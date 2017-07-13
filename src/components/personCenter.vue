@@ -61,7 +61,6 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
 export default {
   name: 'personCenter',
   data () {
@@ -255,7 +254,7 @@ var myScroll,
     width: 22px;
     height: 30px;
     background: url(../images/arrow_icon.png) no-repeat right center #fff;
-    background-size: 8px 16px;
+    background-size: 22px 22px;
   }
   .help_box .infs_list_box:first-child{
     margin-bottom: 0;
