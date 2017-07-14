@@ -78,7 +78,7 @@
         </span>
       </div>
       <div class="add_cart_btn"></div>  
-      <div class="add_cart_icon" @click="goCart">
+      <div class="add_cart_icon" @click="shoppingCart">
         <img :src="addCart">
       </div>
     </div>
@@ -149,7 +149,7 @@ export default {
     addNum: function(){
       this.numValue ++;
     },
-    goCart: function() {
+    shoppingCart: function() {
       if(this.numValue > 0){
         //vue router配置的动态路由，页面无法自动刷新
         this.$router.push({path: '/shoppingCart'});

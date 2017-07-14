@@ -14,7 +14,7 @@
           <div class="cart_list oh" v-for="(item, index) in productList">
             <div class="ckeck_btn"></div>
             <div class="goods_infs">
-              <div class="goods_pic">
+              <div class="goods_pic" @click="goodsDetails">
                 <img :src="item.productImage">
               </div>
               <div class="r_box">
@@ -134,6 +134,11 @@ export default {
     }
   },
   methods: {
+    goodsDetails: function(){
+      this.$router.push({path: '/goodsDetails'});
+        //刷新页面
+        this.$router.go(0);
+    },
     reduceNum: function(event){
       //console.log(event.target);
       //console.log(this.Reduce);

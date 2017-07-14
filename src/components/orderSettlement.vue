@@ -47,7 +47,7 @@
             <div class="goods_details">商品详情</div>
             <div class="goods_list" v-for="(item, index) in productList">
               <div class="goods_infs">
-                <div class="goods_pic">
+                <div class="goods_pic" @click="goodsDetails">
                   <img :src="item.productImage">
                 </div>
                 <div class="r_box">
@@ -173,6 +173,11 @@ export default {
       this.$router.push({path: '/payWays'});
       //刷新页面
       this.$router.go(0);
+    },
+    goodsDetails: function(){
+      this.$router.push({path: '/goodsDetails'});
+        //刷新页面
+        this.$router.go(0);
     }
   }
 }
