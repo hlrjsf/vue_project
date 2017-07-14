@@ -1,12 +1,12 @@
 <template>
   <div class="Main">
     <div class="secondary_head">
-      <div class="go_back">
-        <a href="#"><img :src="goBack" alt=""></a>
+      <div class="go_back" @click="$router.go(-1);">
+        <img :src="goBack" alt="">
       </div>
       <div class="header_title">{{goodsName}}</div>
       <div class="go_cart">
-        <a href="#"><img :src="goCart" alt=""></a>
+        <a href="shoppingCart"><img :src="goCart" alt=""></a>
       </div>
     </div>
     <div id="wrapper">

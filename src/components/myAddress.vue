@@ -1,10 +1,10 @@
 <template>
   <div class="Main">
     <div class="secondary_head">
-		<div class="go_back" @click="$router.go(-1);">
-			<img :src="goBack" alt="">
-		</div>
-      	<div class="header_title">{{myAddress}}</div>
+  		<div class="go_back" @click="$router.go(-1);">
+  			<img :src="goBack" alt="">
+  		</div>
+      <div class="header_title">{{myAddress}}</div>
     </div>
     <div id="wrapper">
       	<div id="scroller">

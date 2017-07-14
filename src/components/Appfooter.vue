@@ -42,31 +42,5 @@ export default {
       cartActive: ''
     }
   }
-   // methods: {
-   //    goHome: function() {
-   //      //vue router配置的动态路由，页面无法自动刷新
-   //      this.$router.push({path: '/home'});
-   //      //刷新页面
-   //      this.$router.go(0);
-   //    },
-   //     goflashSup: function() {
-   //      //vue router配置的动态路由，页面无法自动刷新
-   //      this.$router.push({path: '/flashSup'});
-   //      //刷新页面
-   //      this.$router.go(0);
-   //    },
-   //     gopersonCenter: function() {
-   //      //vue router配置的动态路由，页面无法自动刷新
-   //      this.$router.push({path: '/personCenter'});
-   //      //刷新页面
-   //      this.$router.go(0);
-   //    },
-   //    goCart: function() {
-   //      //vue router配置的动态路由，页面无法自动刷新
-   //      this.$router.push({path: '/shoppingCart'});
-   //      //刷新页面
-   //      this.$router.go(0);
-   //    }
-   //  },
 }
 </script>

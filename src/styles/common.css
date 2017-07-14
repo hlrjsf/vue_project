@@ -164,6 +164,14 @@ img{
   height: 16px;
   margin: 17px auto;
 }
+.go_cart a{
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+ }
 .go_cart img{
   width: 30px;
   height: 30px;

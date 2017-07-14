@@ -7,6 +7,11 @@ import orderSettlement from './components/orderSettlement.vue'
 import myAddress from './components/myAddress.vue'
 import editAddress from './components/editAddress.vue'
 import addAddress from './components/addAddress.vue'
+import myOrder from './components/myOrder.vue'
+import orderDetails from './components/orderDetails.vue'
+import payWays from './components/payWays.vue'
+import bestTime from './components/bestTime.vue'
+
 
 
 
@@ -29,5 +34,13 @@ const routers = [
   { path: '/', component: editAddress },
   { path: '/addAddress', name: 'addAddress', component: addAddress },
   { path: '/', component: addAddress },
+  { path: '/myOrder', name: 'myOrder', component: myOrder },
+  { path: '/', component: myOrder },
+  { path: '/orderDetails', name: 'orderDetails', component: orderDetails },
+  { path: '/', component: orderDetails },
+  { path: '/payWays', name: 'payWays', component: payWays },
+  { path: '/', component: payWays },
+  { path: '/bestTime', name: 'bestTime', component: bestTime },
+  { path: '/', component: bestTime },
 ]
 export default routers

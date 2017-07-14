@@ -4,7 +4,7 @@
 		<div class="go_back" @click="$router.go(-1);">
 			<img :src="goBack" alt="">
 		</div>
-      	<div class="header_title">{{addAddress}}</div>
+    <div class="header_title">{{addAddress}}</div>
     </div>
     <div class="content_mian">
       <form action="./" method="post" name="address_add" id="address_add">
