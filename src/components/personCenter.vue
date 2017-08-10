@@ -1,74 +1,62 @@
 <template>
   <div class="Main">
-    <div id="wrapper">
-      <div id="scroller">
-        <div id="pullDown">
-          <span class="pullDownIcon"></span>
-          <span class="pullDownLabel">下拉刷新...</span>
-        </div>
-        <div class="content_mian">
-          <div class="person_infs">
-            <div class="header_bg">
-              <div class="bg"><img :src="header_bg" /></div>
-              <div class="user_name">
-                <div class="user_header">
-                  <img :src="user_header" />
-                </div>
-                <div class="user_inf">
-                  <p>{{user_title}}</p>
-                  <p>{{user_name}}</p>
-                </div>
-              </div>
+    <div class="content_mian">
+      <div class="person_infs">
+        <div class="header_bg">
+          <div class="bg"><img :src="header_bg" /></div>
+          <div class="user_name">
+            <div class="user_header">
+              <img :src="user_header" />
             </div>
-            <div class="nav_list oh b_fff">
-              <a href="myOrder">
-                <div class="nav_list_box my_order">
-                  <p>{{myOrder}}</p>
-                </div>
-              </a>
-              <a href="#">
-                <div class="nav_list_box my_coupon">
-                  <p>{{myCoupon}}</p>
-                </div>
-              </a>
-              <a href="#">
-                <div class="nav_list_box my_news">
-                  <p>{{myNews}}</p>
-                </div>
-              </a>
-            </div>
-            <div class="infs_list">
-              <a href="myAddress">
-                <div class="infs_list_box my_addrs">
-                  {{myAddres}}
-                </div>
-              </a>
-              <a href="#">
-                <div class="infs_list_box to_share">
-                  {{toShare}}
-                </div>
-              </a>
-              <a href="#">
-                <div class="help_box">
-                  <div class="infs_list_box to_help">
-                    {{toHelp}}
-                  </div>
-                  <div class="infs_list_box to_help_phone">
-                    {{toHelpPhone}}
-                  </div>
-                </div>
-              </a>
-              <a href="#">
-                <div class="infs_list_box to_set">
-                  {{toSet}}
-                </div>
-              </a>
+            <div class="user_inf">
+              <p>{{user_title}}</p>
+              <p>{{user_name}}</p>
             </div>
           </div>
         </div>
-        <div id="pullUp">
-          <span class="pullUpIcon"></span>
-          <span class="pullUpLabel">上拉加载更多...</span>
+        <div class="nav_list oh b_fff">
+          <a href="myOrder">
+            <div class="nav_list_box my_order">
+              <p>{{myOrder}}</p>
+            </div>
+          </a>
+          <a href="#">
+            <div class="nav_list_box my_coupon">
+              <p>{{myCoupon}}</p>
+            </div>
+          </a>
+          <a href="#">
+            <div class="nav_list_box my_news">
+              <p>{{myNews}}</p>
+            </div>
+          </a>
+        </div>
+        <div class="infs_list">
+          <a href="myAddress">
+            <div class="infs_list_box my_addrs">
+              {{myAddres}}
+            </div>
+          </a>
+          <a href="#">
+            <div class="infs_list_box to_share">
+              {{toShare}}
+            </div>
+          </a>
+          <a href="#">
+            <div class="help_box">
+              <div class="infs_list_box to_help">
+                {{toHelp}}
+              </div>
+              <div class="infs_list_box to_help_phone">
+                {{toHelpPhone}}
+              </div>
+            </div>
+          </a>
+          <a href="#">
+            <div class="infs_list_box to_set">
+              {{toSet}}
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -96,91 +84,6 @@ export default {
   methods: {
   }
 }
-var myScroll,
-    pullDownEl, pullDownOffset,
-    pullUpEl, pullUpOffset,
-    generatedCount = 0;
-
-    /**
-     * 下拉刷新 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-    function pullDownAction () {
-        setTimeout(function () {     //setTimeout，调试作用，实际由Ajax请求数据
-            myScroll.refresh();     //数据加载完成后，调用界面更新方法 
-        }, 1000);
-    }
-
-    /**
-     * 滚动翻页 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-        function pullUpAction () {
-            setTimeout(function () {    //setTimeout，调试作用，实际由Ajax请求数据
-                myScroll.refresh();     // 数据加载完成后，调用界面更新方法
-            }, 1000);   
-        }
-
-    /**
-     * 初始化iScroll控件
-     */
-    function loaded() {
-        pullDownEl = document.getElementById('pullDown');
-        pullDownOffset = pullDownEl.offsetHeight;
-        pullUpEl = document.getElementById('pullUp');   
-        pullUpOffset = pullUpEl.offsetHeight;
-
-        myScroll = new iScroll('wrapper', {
-            scrollbarClass: 'myScrollbar', /* 重要样式 */
-            useTransition: false, /* 此属性不知用意，本人从true改为false */
-            topOffset: pullDownOffset,
-            onRefresh: function () {
-                if (pullDownEl.className.match('loading')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                } else if (pullUpEl.className.match('loading')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                }
-            },
-            onScrollMove: function () {
-                if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'flip';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-                    this.minScrollY = 0;
-                } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                    this.minScrollY = -pullDownOffset;
-                } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'flip';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-                    this.maxScrollY = this.maxScrollY;
-                } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    this.maxScrollY = pullUpOffset;
-                }
-            },
-            onScrollEnd: function () {
-                if (pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'loading';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';                
-                    pullDownAction();   // Execute custom function (ajax call?)
-                } else if (pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'loading';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';                
-                    pullUpAction(); // Execute custom function (ajax call?)
-                }
-            }
-        });
-    }
-
-    //初始化绑定iScroll控件 
-    document.addEventListener('touchmove', function (e) {
-      e.preventDefault(); 
-    }, false);
-    document.addEventListener('DOMContentLoaded', loaded, false);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

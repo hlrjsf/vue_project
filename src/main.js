@@ -5,14 +5,11 @@ import VueRouter from 'vue-router'
 import routers from './routers'
 import App from './App'
 import './styles/common.css'
-import './styles/scrollbar.css'
-import iscroll from './js/iscroll'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(VueAwesomeSwiper)
-//Vue.use(Scroller)
 
 const router = new VueRouter({
   mode: 'history',

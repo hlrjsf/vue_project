@@ -2,25 +2,18 @@
   <div class="Appfooter">
     <div class="footer" id="footer">
       <ul>
-        <a href="home">
-          <li class="home">
-              <p>{{home}}</p>
-          </li>
+        <a href="home" class="home">
+          <p>{{home}}</p>
         </a>
-        <a href="flashSup">
-          <li class="flashSup">
-              <p>{{flashSup}}</p>
-          </li>
+        <a href="flashSup" class="flashSup">
+          <p>{{flashSup}}</p>
         </a>
-        <a href="personCenter">
-          <li class="person_center">
-              <p>{{person_center}}</p>
-          </li>
+        <a href="personCenter" class="person_center">
+          <p>{{person_center}}</p>
         </a>
-        <a href="shoppingCart">
-          <li class="cart">
-              <p>{{cart}}</p>
-          </li>
+        <a href="shoppingCart" class="cart">
+          <p>{{cart}}</p>
+          <span class="cart_num">{{cartNum}}</span>
         </a>
       </ul>
     </div>
@@ -39,7 +32,8 @@ export default {
       homeActive: 'true',
       flashSupActive: '',
       personCenterActive: '',
-      cartActive: ''
+      cartActive: '',
+      cartNum: 5
     }
   }
 }

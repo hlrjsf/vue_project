@@ -5,41 +5,29 @@
         <li v-for="(item, index) in items" @click="selectStyle($event, index)" :class="{'active':nowIndex ==index}">{{item.select}}</li>
       </ul>
     </div>
-    <div id="wrapper">
-      <div id="scroller">
-        <div id="pullDown">
-          <span class="pullDownIcon"></span>
-          <span class="pullDownLabel">下拉刷新...</span>
-        </div>
-        <div class="content_mian">
-          <div class="ul_right">
-            <ul>
-              <li v-for="(item,index) in productList">
-                <div class="l_box">
-                  <img :src="item.productImage">
-                </div>
-                <div class="r_box">
-                  <div class="title_box">
-                    <div class="label">{{item.productLabel}}</div>
-                    <div class="p_name">{{item.productName}}</div>
-                  </div>
-                  <div class="buy_one_give_one">          
-                    {{item.productActive}}
-                  </div>
-                  <div class="specifications">
-                    <span class="p_price">{{item.productPrice}}</span>
-                    <span class="norm">{{item.productNorm}}</span>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="pullUp">
-          <span class="pullUpIcon"></span>
-          <span class="pullUpLabel">上拉加载更多...</span>
-        </div>
-        </div>
+    <div class="content_mian">
+      <div class="ul_right">
+        <ul>
+          <li v-for="(item,index) in productList">
+            <div class="l_box">
+              <img :src="item.productImage">
+            </div>
+            <div class="r_box">
+              <div class="title_box">
+                <div class="label">{{item.productLabel}}</div>
+                <div class="p_name">{{item.productName}}</div>
+              </div>
+              <div class="buy_one_give_one">          
+                {{item.productActive}}
+              </div>
+              <div class="specifications">
+                <span class="p_price">{{item.productPrice}}</span>
+                <span class="norm">{{item.productNorm}}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -107,119 +95,21 @@ export default {
     }
   }
 }
-var myScroll,
-    pullDownEl, pullDownOffset,
-    pullUpEl, pullUpOffset,
-    generatedCount = 0;
-
-    /**
-     * 下拉刷新 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-    function pullDownAction () {
-        setTimeout(function () {     //setTimeout，调试作用，实际由Ajax请求数据
-            myScroll.refresh();     //数据加载完成后，调用界面更新方法 
-        }, 1000);
-    }
-
-    /**
-     * 滚动翻页 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-        function pullUpAction () {
-            setTimeout(function () {    //setTimeout，调试作用，实际由Ajax请求数据
-                myScroll.refresh();     // 数据加载完成后，调用界面更新方法
-            }, 1000);   
-        }
-
-    /**
-     * 初始化iScroll控件
-     */
-    function loaded() {
-        pullDownEl = document.getElementById('pullDown');
-        pullDownOffset = pullDownEl.offsetHeight;
-        pullUpEl = document.getElementById('pullUp');   
-        pullUpOffset = pullUpEl.offsetHeight;
-        
-        myScroll = new iScroll('wrapper', {
-            scrollbarClass: 'myScrollbar', /* 重要样式 */
-            useTransition: false, /* 此属性不知用意，本人从true改为false */
-            topOffset: pullDownOffset,
-            onRefresh: function () {
-                if (pullDownEl.className.match('loading')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                } else if (pullUpEl.className.match('loading')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                }
-            },
-            onScrollMove: function () {
-                if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'flip';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-                    this.minScrollY = 0;
-                } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                    this.minScrollY = -pullDownOffset;
-                } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'flip';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-                    this.maxScrollY = this.maxScrollY;
-                } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    this.maxScrollY = pullUpOffset;
-                }
-            },
-            onScrollEnd: function () {
-                if (pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'loading';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';                
-                    pullDownAction();   // Execute custom function (ajax call?)
-                } else if (pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'loading';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';                
-                    pullUpAction(); // Execute custom function (ajax call?)
-                }
-            }
-        });
-    }
-
-    //初始化绑定iScroll控件 
-    document.addEventListener('touchmove', function (e) {
-      e.preventDefault(); 
-    }, false);
-    document.addEventListener('DOMContentLoaded', loaded, false); 
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-#wrapper {
-  position:absolute; 
-  z-index:1;
-  top:50px; 
-  bottom:51px; 
-  right:0;
-  width:78%;
-  margin-left: 22%;
-  overflow:auto;  
-}
-#scroller {
-  position:relative;
-  right: 0;
-  width:100%;
-  padding:0;
-
-}
 .menu_nav{
   position: fixed;
   width: 20%;
   left: 0;
   top: 50px;
   text-align: center;
+}
+.content_mian{
+  float: right;
+  width: 80%;
+  margin: 0 0 50px 0;
 }
 .menu_nav ul li{
   height: 40px;
@@ -242,6 +132,9 @@ var myScroll,
   display: block;
   padding: 10px 0;
   border-bottom: 1px solid #ddd;
+}
+.ul_right li:last-child{
+  border-bottom: none;
 }
 .l_box{
   display: inline-block;

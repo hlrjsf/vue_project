@@ -1,54 +1,58 @@
 <template>
   <div class="Main">
-    <div class="select_list">
-      <div class="fl ckeck_btn">{{chechAll}}</div>
-      <div class="edit_all fr">{{editAll}}</div>
+    <div class="select_productList">
+      <div class="fl ckeck_btn" :class="{'selected': isSelectAll}" @click="checkAll">{{chechAll}}</div>
+      <div class="edit_all fr" :class="{'isShow': !isSureEditAll, 'isHide': isSureEditAll}" @click="editAllInfs">编辑全部</div>
+      <div class="sure_edit_all fr" :class="{'isShow': isSureEditAll, 'isHide': !isSureEditAll}" @click="sureEditAllInfs">完成</div>
     </div>
-    <div id="wrapper">
-      <div id="scroller">
-        <div id="pullDown">
-          <span class="pullDownIcon"></span>
-          <span class="pullDownLabel">下拉刷新...</span>
-        </div>
-        <div class="content_mian">
-          <div class="cart_list oh" v-for="(item, index) in productList">
-            <div class="ckeck_btn"></div>
-            <div class="goods_infs">
-              <div class="goods_pic" @click="goodsDetails">
-                <img :src="item.productImage">
-              </div>
-              <div class="r_box">
-                <div class="goods_name">{{item.productName}}</div>
-                <div class="goods_brand_norm">
-                  品牌：<span class="brand">{{item.productBrand}}</span>
-                  规格：<span class="norm">{{item.productNorm}}</span>
-                </div>
-                <div class="goods_taste">
-                  口味：<span>{{item.productTaste}}</span>
-                </div>
-                <div class="goods_price">
-                  <span class="now_price">￥{{item.productNowPrice}}</span>
-                  <span class="old_price">￥{{item.productOldPrice}}</span>
-                </div>
-                <div class="goods_num">
-                  数量：
-                  <span class="reduce">
-                    <img :src="Reduce" @click="reduceNum">
-                  </span>
-                  <span class="num">
-                    <input type="text" v-model="item.productNum" />
-                  </span>
-                  <span class="add" @click="addNum">
-                    <img :src="Add">
-                  </span>
-                </div>
-              </div>
+    <div class="content_mian">
+      <div class="cart_productList oh" v-for="(item, index) in productList">
+        <div class="ckeck_btn" :class="{'selected':item.isChecked}" @click="selectGoods(item, index)"></div>
+        <div class="goods_infs">
+          <div class="goods_pic" @click="selectGood(item,index)">
+            <img :src="item.productImage">
+          </div>
+          <div class="r_box" :class="{'isShow': !item.isShowRbox, 'isHide': item.isShowRbox}">
+            <div class="goods_name">{{item.productName}}</div>
+            <div class="goods_brand_norm">
+              品牌：<span class="brand">{{item.productBrand}}</span>
+              规格：<span class="norm">{{item.productNorm}}g</span>
+            </div>
+            <div class="goods_taste">
+              口味：<span>{{item.productTaste}}</span>
+            </div>
+            <div class="goods_price">
+              <span class="now_price">￥{{item.productNowPrice}}</span>
+              <span class="old_price">￥{{item.productOldPrice}}</span>
+            </div>
+            <div class="goods_num">
+              数量：
+              <span class="num">{{item.productNum}}</span>
+              <span class="edit_btn" @click="editGoods(item)">编辑</span>
             </div>
           </div>
-        </div>
-        <div id="pullUp">
-          <span class="pullUpIcon"></span>
-          <span class="pullUpLabel">上拉加载更多...</span>
+          <div class="edit_infs" :class="{'isShow': item.isShowEditInfs, 'isHide': !item.isShowEditInfs}">
+            <div class="goods_name">{{item.productName}}</div>
+            <div class="goods_brand_norm">
+              品牌：<span class="brand">{{item.productBrand}}</span>
+              规格：<span class="norm">{{item.productNorm}}g</span>
+            </div>
+            <div class="change_num">
+              <span class="reduce">
+                <img :src="Reduce" @click="changeNum(item, -1)">
+              </span> 
+              <span class="change_num">
+                <input type="text" v-model="item.productNum" />
+              </span>
+              <span class="add" @click="changeNum(item, 1)">
+                <img :src="Add">
+              </span>
+              <span class="delect" @click="delectGoods(item)">
+                <img :src="Delect">
+              </span>
+            </div>
+            <div class="sure_edit" @click="sureEdit(item)">完成</div>
+          </div>
         </div>
       </div>
     </div>
@@ -65,7 +69,7 @@
 </template>
 <script>
 export default {
-  name: 'personCenter',
+  name: 'shoppingCart',
   data () {
     return {
       chechAll: '全选',
@@ -75,62 +79,59 @@ export default {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm: 87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2', 
-          flag: 'null' 
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 1, 
         },
         {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm: 87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2', 
-          flag: 'null'  
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 1, 
         },
         {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm: 87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2',
-          flag: 'null'   
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 1,
         },
         {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm: 87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2',
-          flag: 'null'   
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 1,  
         },
         {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm: 87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2',
-          flag: 'null'   
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 1, 
         }
       ],
       Reduce: '../static/img/reduce.png',
       Add: '../static/img/add.png',
-      orderSubtotal: '1234',
-      nowIndex: 'null'
+      Delect: '../static/img/delect.png',
+      orderSubtotal: 0, 
+      isSelectAll: false,
+      isSureEditAll: false,
     }
   },
   methods: {
@@ -139,118 +140,122 @@ export default {
         //刷新页面
         this.$router.go(0);
     },
-    reduceNum: function(event){
-      //console.log(event.target);
-      //console.log(this.Reduce);
+    editAllInfs: function(){
+      var _this = this;
+      this.productList.forEach(function (item, index) { // 用forEach来遍历 productList
+        _this.editGoods(item);
+      });
+      _this.isSureEditAll = true;
     },
-    addNum: function(){
-      // this.item.productNum ++;
-    }
+    sureEditAllInfs: function(){
+      var _this = this;
+      this.productList.forEach(function (item, index) { // 用forEach来遍历 productList
+        _this.sureEdit(item);
+      });
+      _this.isSureEditAll = false;
+    },
+    editGoods: function(item){
+      var _this = this;
+      if(typeof item.isShowEditInfs == 'undefined'){ // 
+        _this.$set(item, "isShowEditInfs", true);
+        item.isShowRbox = !item.isShowRbox;
+      }else if(item.isShowEditInfs == true){  //全部编辑
+        item.isShowEditInfs = true;
+      }else{
+        item.isShowEditInfs = !item.isShowEditInfs;
+        item.isShowRbox = !item.isShowRbox;
+      }
+    },
+    sureEdit: function(item){
+      var _this = this;
+      if(item.isShowEditInfs == true){ // 
+        item.isShowEditInfs = !item.isShowEditInfs;
+        item.isShowRbox = !item.isShowRbox;
+      }
+    },
+    //数量加减
+    changeNum: function(product, way){
+      if(way > 0){ //当 way>0 就是点击的 +
+          product.productNum++; // 数量增加  就相当于 item 的productQuentity
+      }else {
+          product.productNum--; // 否则数量减少
+          if(product.productNum <= 1){ //
+              product.productNum = 1;
+          }
+      }
+      this.caleTotalPrice();
+    },
+    selectGoods: function(item){
+      var _this = this;
+      if(typeof item.isChecked == 'undefined'){ // 
+        _this.$set(item,"isChecked",true);
+      }else{
+        item.isChecked = !item.isChecked;
+      }
+      _this.isCheckAll();
+      this.caleTotalPrice();
+    },
+    checkAll:function (){
+      var _this = this;
+      if(!_this.isSelectAll){
+        _this.isSelectAll = true;
+        _this.isSelect();
+      }else{
+        _this.isSelectAll = !_this.isSelectAll;
+        _this.isSelect();
+      }
+      this.caleTotalPrice();
+    },
+    isSelect: function(){
+      var _this = this;
+      this.productList.forEach(function (item, index) { // 用forEach来遍历 productList
+        if(typeof item.isChecked == 'undefined'){
+          _this.$set(item, "isChecked", _this.isSelectAll);
+        }else{
+          item.isChecked = _this.isSelectAll;
+        }
+      });
+    },
+    isCheckAll:function(){
+      var flag = true;
+      this.productList.forEach(function(good){
+        if(!good.isChecked){
+          flag = false;
+        }
+      });
+      if(!flag){
+        this.isSelectAll = false;
+      } else {
+        this.isSelectAll = true;
+      }
+    },
+    // 计算选中商品的总价
+    caleTotalPrice:function () {
+      var _this = this;
+      this.orderSubtotal = 0;
+      this.productList.forEach(function (item, index) {
+         if(item.isChecked){
+            _this.orderSubtotal += item.productNowPrice * item.productNum;
+         }
+      });
+    },
   }
 }
-var myScroll,
-    pullDownEl, pullDownOffset,
-    pullUpEl, pullUpOffset,
-    generatedCount = 0;
-
-    /**
-     * 下拉刷新 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-    function pullDownAction () {
-        setTimeout(function () {     //setTimeout，调试作用，实际由Ajax请求数据
-            myScroll.refresh();     //数据加载完成后，调用界面更新方法 
-        }, 1000);
-    }
-
-    /**
-     * 滚动翻页 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-        function pullUpAction () {
-            setTimeout(function () {    //setTimeout，调试作用，实际由Ajax请求数据
-                myScroll.refresh();     // 数据加载完成后，调用界面更新方法
-            }, 1000);   
-        }
-
-    /**
-     * 初始化iScroll控件
-     */
-    function loaded() {
-        pullDownEl = document.getElementById('pullDown');
-        pullDownOffset = pullDownEl.offsetHeight;
-        pullUpEl = document.getElementById('pullUp');   
-        pullUpOffset = pullUpEl.offsetHeight;
-
-        myScroll = new iScroll('wrapper', {
-            scrollbarClass: 'myScrollbar', /* 重要样式 */
-            useTransition: false, /* 此属性不知用意，本人从true改为false */
-            topOffset: pullDownOffset,
-            onRefresh: function () {
-                if (pullDownEl.className.match('loading')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                } else if (pullUpEl.className.match('loading')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                }
-            },
-            onScrollMove: function () {
-                if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'flip';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-                    this.minScrollY = 0;
-                } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                    this.minScrollY = -pullDownOffset;
-                } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'flip';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-                    this.maxScrollY = this.maxScrollY;
-                } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    this.maxScrollY = pullUpOffset;
-                }
-            },
-            onScrollEnd: function () {
-                if (pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'loading';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';                
-                    pullDownAction();   // Execute custom function (ajax call?)
-                } else if (pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'loading';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';                
-                    pullUpAction(); // Execute custom function (ajax call?)
-                }
-            }
-        });
-    }
-
-    //初始化绑定iScroll控件 
-    document.addEventListener('touchmove', function (e) {
-      e.preventDefault(); 
-    }, false);
-    document.addEventListener('DOMContentLoaded', loaded, false);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   .content_mian{
-    top: 40px;
+    margin: 90px 0 106px 0;
   }
-  #pullUp{
-    margin-top: 50px;
-  }
-  .select_list, .order_subtotal{
+  .select_productList, .order_subtotal{
     position: fixed;
     width: 100%;
     left: 0;
     background: rgba(255, 255, 255, 0.9);
     z-index: 99;
   }
-  .select_list{
+  .select_productList{
     height: 40px;
     line-height: 40px;
     top: 50px;
@@ -264,30 +269,59 @@ var myScroll,
   .ckeck_btn{
     margin-left: 10px;
     padding-left: 30px;
+    background: url(../images/ls_icon1.png) no-repeat left center;
+    background-size: 25px 25px;
+  }  
+  .ckeck_btn.selected{
+    margin-left: 10px;
+    padding-left: 30px;
     background: url(../images/ls_icon2.png) no-repeat left center;
     background-size: 25px 25px;
   }
-  .edit_all{
+  .edit_all.isShow{
     margin-right: 15px;
     padding-left: 20px;
     background: url(../images/info_all_icon.png) no-repeat left center;
     background-size: auto 55%;
   }
-  .cart_list{
+  .edit_all.isHide, .sure_edit_all.isHide{
+    display: none;
+  }
+  .sure_edit_all.isShow{
+    margin-right: 15px;
+    padding-left: 20px;
+    background: url(../images/sure_edit_all.png) no-repeat left center;
+    background-size: auto 55%;
+  }
+  .cart_productList{
     margin: 0 10px 10px 10px;
     padding: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  .cart_list .ckeck_btn, .goods_pic, .r_box{
+  .cart_productList .ckeck_btn, .goods_pic, .r_box{
     display: inline-block;
     vertical-align: middle;
+  }
+  .edit_infs.isHide, .r_box.isHide{
+    display: none;
+  }
+  .edit_infs.isShow{
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .change_num{
+    margin: 10px 0;
+  }
+  .sure_edit{
+    text-align: right;
+    color: #999;
   }
   .goods_infs{
     float: right;
     width: 88%;
   }
-  .cart_list .ckeck_btn{
+  .cart_productList .ckeck_btn{
     width: 25px;
     height: 25px;
     margin-top: 2.3rem;
@@ -330,12 +364,18 @@ var myScroll,
     color: #fff;
     background: #f7bc46;
   }
-  .num input{
+  .edit_btn{
+    float: right;
+    color: #999;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+  }
+  .change_num input{
     display: inline-block;
     width: 40px;
     height: 20px;
     line-height: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     text-align: center;
     vertical-align: middle;
   }
@@ -345,6 +385,14 @@ var myScroll,
     height: 25px;
     vertical-align: middle;
   }
+  .delect{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+   
 
   /*footer.vue*/
   .cart{

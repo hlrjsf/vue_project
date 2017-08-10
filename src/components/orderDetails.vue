@@ -6,100 +6,88 @@
       </div>
       <div class="header_title">{{orderDetails}}</div>
     </div>
-    <div id="wrapper">
-      <div id="scroller">
-        <div id="pullDown">
-          <span class="pullDownIcon"></span>
-          <span class="pullDownLabel">下拉刷新...</span>
-        </div>
-        <div class="content_mian">
-          <div class="order_list">
-              <div class="order_price">
-                <div class="all_price">￥{{orderPrice}}</div>
-                <div class="goods_num">共{{goodsNum}}件</div>
+    <div class="content_mian">
+      <div class="order_list">
+          <div class="order_price">
+            <div class="all_price">￥{{orderPrice}}</div>
+            <div class="goods_num">共{{goodsNum}}件</div>
+          </div>
+          <div class="order_infs">
+            <div class="order_code">单号：{{orderCode}}</div>
+            <div class="order_time">日期：{{orderTime}}</div>
+            <div class="order_state b_color">{{orderState}}</div>
+          </div>
+      </div>
+      <div class="same_part_list goods_details_list">
+        <div class="goods_details">商品详情</div>
+        <div class="goods_list">
+          <div class="goods_infs">
+            <div class="goods_pic">
+              <img :src="productImage">
+            </div>
+            <div class="r_box">
+              <div class="goods_name">{{productName}}</div>
+              <div class="goods_brand_norm">
+                品牌：<span class="brand">{{productBrand}}</span>
+                规格：<span class="norm">{{productNorm}}</span>
               </div>
-              <div class="order_infs">
-                <div class="order_code">单号：{{orderCode}}</div>
-                <div class="order_time">日期：{{orderTime}}</div>
-                <div class="order_state b_color">{{orderState}}</div>
+              <div class="goods_taste">
+                口味：<span>{{productTaste}}</span>
               </div>
-          </div>
-          <div class="same_part_list goods_details_list">
-            <div class="goods_details">商品详情</div>
-            <div class="goods_list">
-              <div class="goods_infs">
-                <div class="goods_pic">
-                  <img :src="productImage">
-                </div>
-                <div class="r_box">
-                  <div class="goods_name">{{productName}}</div>
-                  <div class="goods_brand_norm">
-                    品牌：<span class="brand">{{productBrand}}</span>
-                    规格：<span class="norm">{{productNorm}}</span>
-                  </div>
-                  <div class="goods_taste">
-                    口味：<span>{{productTaste}}</span>
-                  </div>
-                  <div class="goods_price">
-                    <span class="now_price">￥{{productNowPrice}}</span>
-                    <span class="old_price">￥{{productOldPrice}}</span>
-                  </div>
-                  <div class="goods_num">
-                    数量：<span class="num">{{productNum}}</span>
-                  </div>
-                </div>
+              <div class="goods_price">
+                <span class="now_price">￥{{productNowPrice}}</span>
+                <span class="old_price">￥{{productOldPrice}}</span>
               </div>
-            </div>
-          </div>
-          <div class="same_part_list goods_details_list">
-            <div class="goods_details">资费详情</div>
-            <div class="infs_list">
-              商品件数：<span>{{allNum}}件</span>
-            </div>
-            <div class="infs_list">
-              商品总价：<span>￥{{totalPrice}}</span>
-            </div>
-            <div class="infs_list">
-              商品运费：<span>￥{{allFare}}</span>
-            </div>
-            <div class="infs_list">
-              订单总额：<span>￥{{orderTotal}}</span>
-            </div>
-          </div>
-          <div class="same_part_list goods_details_list">
-            <div class="goods_details">收货地址详情</div>
-            <div class="infs_list">
-              收 件 人：<span>{{userName}}</span>
-            </div>
-            <div class="infs_list">
-              联系电话：<span>{{userPhone}}</span>
-            </div>
-            <div class="infs_list">
-              详细地址：<span>{{userAddress}}</span>
-            </div>
-            <div class="infs_list">
-              收件时间：<span>{{timeofReceipt}}</span>
-            </div>
-          </div>
-          <div class="same_part_list goods_details_list">
-            <div class="goods_details">支付</div>
-            <div class="infs_list">
-              支付方式：<span>{{payWay}}</span>
-            </div>
-            <div class="infs_list">
-              支付状态：<span>{{payState}}</span>
-            </div>
-          </div>
-          <div class="same_part_list goods_details_list">
-            <div class="goods_details">备注</div>
-            <div class="infs_list">
-              配注信息：<span>( {{noteTxt}} )</span>
+              <div class="goods_num">
+                数量：<span class="num">{{productNum}}</span>
+              </div>
             </div>
           </div>
         </div>
-        <div id="pullUp">
-          <span class="pullUpIcon"></span>
-          <span class="pullUpLabel">上拉加载更多...</span>
+      </div>
+      <div class="same_part_list goods_details_list">
+        <div class="goods_details">资费详情</div>
+        <div class="infs_list">
+          商品件数：<span>{{allNum}}件</span>
+        </div>
+        <div class="infs_list">
+          商品总价：<span>￥{{totalPrice}}</span>
+        </div>
+        <div class="infs_list">
+          商品运费：<span>￥{{allFare}}</span>
+        </div>
+        <div class="infs_list">
+          订单总额：<span>￥{{orderTotal}}</span>
+        </div>
+      </div>
+      <div class="same_part_list goods_details_list">
+        <div class="goods_details">收货地址详情</div>
+        <div class="infs_list">
+          收 件 人：<span>{{userName}}</span>
+        </div>
+        <div class="infs_list">
+          联系电话：<span>{{userPhone}}</span>
+        </div>
+        <div class="infs_list">
+          详细地址：<span>{{userAddress}}</span>
+        </div>
+        <div class="infs_list">
+          收件时间：<span>{{timeofReceipt}}</span>
+        </div>
+      </div>
+      <div class="same_part_list goods_details_list">
+        <div class="goods_details">支付</div>
+        <div class="infs_list">
+          支付方式：<span>{{payWay}}</span>
+        </div>
+        <div class="infs_list">
+          支付状态：<span>{{payState}}</span>
+        </div>
+      </div>
+      <div class="same_part_list goods_details_list">
+        <div class="goods_details">备注</div>
+        <div class="infs_list">
+          配注信息：<span>( {{noteTxt}} )</span>
         </div>
       </div>
     </div>
@@ -144,91 +132,6 @@ export default {
   methods: {
   }
 }
-var myScroll,
-    pullDownEl, pullDownOffset,
-    pullUpEl, pullUpOffset,
-    generatedCount = 0;
-
-    /**
-     * 下拉刷新 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-    function pullDownAction () {
-        setTimeout(function () {     //setTimeout，调试作用，实际由Ajax请求数据
-            myScroll.refresh();     //数据加载完成后，调用界面更新方法 
-        }, 1000);
-    }
-
-    /**
-     * 滚动翻页 （自定义实现此方法）
-     * myScroll.refresh();      // 数据加载完成后，调用界面更新方法
-     */
-        function pullUpAction () {
-            setTimeout(function () {    //setTimeout，调试作用，实际由Ajax请求数据
-                myScroll.refresh();     // 数据加载完成后，调用界面更新方法
-            }, 1000);   
-        }
-
-    /**
-     * 初始化iScroll控件
-     */
-    function loaded() {
-        pullDownEl = document.getElementById('pullDown');
-        pullDownOffset = pullDownEl.offsetHeight;
-        pullUpEl = document.getElementById('pullUp');   
-        pullUpOffset = pullUpEl.offsetHeight;
-
-        myScroll = new iScroll('wrapper', {
-            scrollbarClass: 'myScrollbar', /* 重要样式 */
-            useTransition: false, /* 此属性不知用意，本人从true改为false */
-            topOffset: pullDownOffset,
-            onRefresh: function () {
-                if (pullDownEl.className.match('loading')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                } else if (pullUpEl.className.match('loading')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                }
-            },
-            onScrollMove: function () {
-                if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'flip';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-                    this.minScrollY = 0;
-                } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                    pullDownEl.className = '';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                    this.minScrollY = -pullDownOffset;
-                } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'flip';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-                    this.maxScrollY = this.maxScrollY;
-                } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-                    pullUpEl.className = '';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    this.maxScrollY = pullUpOffset;
-                }
-            },
-            onScrollEnd: function () {
-                if (pullDownEl.className.match('flip')) {
-                    pullDownEl.className = 'loading';
-                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';                
-                    pullDownAction();   // Execute custom function (ajax call?)
-                } else if (pullUpEl.className.match('flip')) {
-                    pullUpEl.className = 'loading';
-                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';                
-                    pullUpAction(); // Execute custom function (ajax call?)
-                }
-            }
-        });
-    }
-
-    //初始化绑定iScroll控件 
-    document.addEventListener('touchmove', function (e) {
-      e.preventDefault(); 
-    }, false);
-    document.addEventListener('DOMContentLoaded', loaded, false);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
