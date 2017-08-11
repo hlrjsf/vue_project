@@ -37,6 +37,10 @@
               品牌：<span class="brand">{{item.productBrand}}</span>
               规格：<span class="norm">{{item.productNorm}}g</span>
             </div>
+            <div class="goods_price">
+              <span class="now_price">￥{{item.productNowPrice}}</span>
+              <span class="old_price">￥{{item.productOldPrice}}</span>
+            </div>
             <div class="change_num">
               <span class="reduce">
                 <img :src="Reduce" @click="changeNum(item, -1)">
@@ -64,6 +68,16 @@
       <a href="orderSettlement">
         <span class="go_account">去结算</span>
       </a>
+    </div>
+    <!-- 删除弹出层 -->
+    <div class="mask" v-if="delFlag"  @touchmove.prevent>
+      <div class="delect_product" :class="{'isShow': delFlag, 'isHide': !delFlag}">
+        <div class="note_txt">确定要删除该商品</div>
+        <div class="btn_list">
+          <button class="cancel_btn" @click="move">取消</button>
+          <button class="sure_btn" @click="delProduct">确定</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -132,6 +146,8 @@ export default {
       orderSubtotal: 0, 
       isSelectAll: false,
       isSureEditAll: false,
+      curProduct: '',
+      delFlag:false 
     }
   },
   methods: {
@@ -140,21 +156,21 @@ export default {
         //刷新页面
         this.$router.go(0);
     },
-    editAllInfs: function(){
+    editAllInfs: function(){   //编辑全部
       var _this = this;
       this.productList.forEach(function (item, index) { // 用forEach来遍历 productList
         _this.editGoods(item);
       });
       _this.isSureEditAll = true;
     },
-    sureEditAllInfs: function(){
+    sureEditAllInfs: function(){   //完成编辑全部
       var _this = this;
       this.productList.forEach(function (item, index) { // 用forEach来遍历 productList
         _this.sureEdit(item);
       });
       _this.isSureEditAll = false;
     },
-    editGoods: function(item){
+    editGoods: function(item){ //编辑
       var _this = this;
       if(typeof item.isShowEditInfs == 'undefined'){ // 
         _this.$set(item, "isShowEditInfs", true);
@@ -166,9 +182,9 @@ export default {
         item.isShowRbox = !item.isShowRbox;
       }
     },
-    sureEdit: function(item){
+    sureEdit: function(item){// 完成编辑
       var _this = this;
-      if(item.isShowEditInfs == true){ // 
+      if(item.isShowEditInfs == true){ 
         item.isShowEditInfs = !item.isShowEditInfs;
         item.isShowRbox = !item.isShowRbox;
       }
@@ -176,7 +192,7 @@ export default {
     //数量加减
     changeNum: function(product, way){
       if(way > 0){ //当 way>0 就是点击的 +
-          product.productNum++; // 数量增加  就相当于 item 的productQuentity
+          product.productNum++; // 数量增加  就相当于 item 的productNum
       }else {
           product.productNum--; // 否则数量减少
           if(product.productNum <= 1){ //
@@ -187,7 +203,7 @@ export default {
     },
     selectGoods: function(item){
       var _this = this;
-      if(typeof item.isChecked == 'undefined'){ // 
+      if(typeof item.isChecked == 'undefined'){ // 单选
         _this.$set(item,"isChecked",true);
       }else{
         item.isChecked = !item.isChecked;
@@ -195,7 +211,7 @@ export default {
       _this.isCheckAll();
       this.caleTotalPrice();
     },
-    checkAll:function (){
+    checkAll:function (){  //全选
       var _this = this;
       if(!_this.isSelectAll){
         _this.isSelectAll = true;
@@ -206,7 +222,7 @@ export default {
       }
       this.caleTotalPrice();
     },
-    isSelect: function(){
+    isSelect: function(){   //判断单选
       var _this = this;
       this.productList.forEach(function (item, index) { // 用forEach来遍历 productList
         if(typeof item.isChecked == 'undefined'){
@@ -216,7 +232,7 @@ export default {
         }
       });
     },
-    isCheckAll:function(){
+    isCheckAll:function(){   //判断全选
       var flag = true;
       this.productList.forEach(function(good){
         if(!good.isChecked){
@@ -229,17 +245,41 @@ export default {
         this.isSelectAll = true;
       }
     },
-    // 计算选中商品的总价
-    caleTotalPrice:function () {
+    caleTotalPrice:function () {  // 计算选中商品的总价
       var _this = this;
       this.orderSubtotal = 0;
       this.productList.forEach(function (item, index) {
-         if(item.isChecked){
+          if(item.isChecked){
             _this.orderSubtotal += item.productNowPrice * item.productNum;
-         }
+          }
       });
     },
-  }
+    delectGoods:function (item) {  // 点击删除 出现弹框
+        this.delFlag = true;
+        this.curProduct = item; // 保存当前删除的对象
+        this.stop();
+    },
+    delProduct:function () {   // 点击弹框里面的确认删除
+      // 通过indexof 来搜索当前选中的商品 找到索引 index
+      var index = this.productList.indexOf(this.curProduct);
+      // 获取索引 后删除元素 splice(index，1) 两个参数  第一个参数索引 第二个参数 删除个数
+      this.productList.splice(index, 1);// 从当前索引开始删，删除一个元素
+      this.move();
+      return this.productList;
+    },
+    mo: function(e){
+      e.preventDefault();
+    },
+    stop: function(){  //禁止滑动
+      document.body.style.overflow = 'hidden';        
+      document.addEventListener("touchmove", this.mo, false);//禁止页面滑动
+    },
+    move: function(){   //取消滑动限制
+      document.body.style.overflow = '';//出现滚动条
+      document.removeEventListener("touchmove", this.mo, false); 
+      this.delFlag = false; // 删除/取消删除后 弹框消失    
+    }
+  },
 }
 </script>
 
@@ -392,7 +432,57 @@ export default {
     vertical-align: middle;
     margin-left: 10px;
   }
-   
+  .delect_product{
+    position: absolute;
+    width: 70%;
+    height: 20%;
+    top: 50%;
+    left: 50%;
+    margin-left: -35%;
+    margin-top: -10%;
+    background: #fff;
+    z-index: 1000000;
+  }
+  .delect_product.isHide{
+    display: none;
+  }
+  .delect_product.isShow{
+    display: block;
+  }
+  .mask{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999999;
+  }
+  .note_txt{
+    text-align: center;
+    margin-top: 30px;
+  }
+  .btn_list{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #ddd;
+  }
+  .sure_btn, .cancel_btn{
+    float: left;
+    width: 50%;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+  }
+  .sure_btn{
+    color: #fff;
+    background: #f7bc46;
+  }
+  .cancel_btn{
+    background: #eee;
+  }
 
   /*footer.vue*/
   .cart{
