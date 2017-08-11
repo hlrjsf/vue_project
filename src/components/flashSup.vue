@@ -51,40 +51,40 @@ export default {
           productLabel: '精选',
           productName:'爱鲜蜂-佳沛绿奇异果', 
           productActive: '买一赠一',
-          productPrice:'￥16.9',
-          productNorm: '3粒/1盒',
+          productPrice:16.9,
+          productNorm: '3粒/1盒'
         },
 　　　　{
           productImage:'../static/img/goods_pic03.png', 
           productLabel: '精选',
           productName:'爱鲜蜂-佳沛绿奇异果', 
           productActive: '买一赠一',
-          productPrice:'￥16.9',
-          productNorm: '3粒/1盒',
+          productPrice:16.9,
+          productNorm: '3粒/1盒'
         },
 　　　　{
           productImage:'../static/img/goods_pic03.png', 
           productLabel: '精选',
           productName:'爱鲜蜂-佳沛绿奇异果', 
           productActive: '买一赠一',
-          productPrice:'￥16.9',
-          productNorm: '3粒/1盒',
+          productPrice:16.9,
+          productNorm: '3粒/1盒'
         },
         {
           productImage:'../static/img/goods_pic03.png', 
           productLabel: '精选',
           productName:'爱鲜蜂-佳沛绿奇异果', 
           productActive: '买一赠一',
-          productPrice:'￥16.9',
-          productNorm: '3粒/1盒',
+          productPrice:16.9,
+          productNorm: '3粒/1盒'
         },
         {
           productImage:'../static/img/goods_pic03.png', 
           productLabel: '精选',
           productName:'爱鲜蜂-佳沛绿奇异果', 
           productActive: '买一赠一',
-          productPrice:'￥16.9',
-          productNorm: '3粒/1盒',
+          productPrice:16.9,
+          productNorm: '3粒/1盒'
         }
       ],
     }

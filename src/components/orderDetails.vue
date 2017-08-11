@@ -29,7 +29,7 @@
               <div class="goods_name">{{productName}}</div>
               <div class="goods_brand_norm">
                 品牌：<span class="brand">{{productBrand}}</span>
-                规格：<span class="norm">{{productNorm}}</span>
+                规格：<span class="norm">{{productNorm}}g</span>
               </div>
               <div class="goods_taste">
                 口味：<span>{{productTaste}}</span>
@@ -103,23 +103,23 @@ export default {
     return {
       goBack: '../static/img/Back.png',
       orderDetails: '订单详情',
-      orderPrice: '43',
-      goodsNum: '6',
+      orderPrice: 43,
+      goodsNum: 6,
       orderCode: '000021707121140191298841',
       orderTime: '2017-7-4 11:40',
       orderState: '已支付',
       productImage:'../static/img/cart_goods.png', 
       productName:'合味道XO酱海鲜风味面',
       productBrand:'日清',
-      productNorm:'87g',
+      productNorm: 87,
       productTaste: '海鲜风味',
-      productNowPrice:'5.5',
-      productOldPrice:'6',
-      productNum: '6', 
-      allNum: '6',
-      totalPrice: '33',
-      allFare: '10',
-      orderTotal: '43',
+      productNowPrice: 5.5,
+      productOldPrice: 6,
+      productNum: 6, 
+      allNum: 6,
+      totalPrice: 33,
+      allFare: 10,
+      orderTotal: 43,
       userName: '黄小六',
       userPhone: '13845262439',
       userAddress: '广东省 广州市 天河区 车陂南启明大街南15苑6号',

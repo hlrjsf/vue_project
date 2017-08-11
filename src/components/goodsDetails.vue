@@ -28,19 +28,13 @@
           </div>
         </div> 
         <div class="infs_list">
-          <div class="brand">
-            <span>{{Brand}}</span>
-            <span>{{brandName}}</span>
-          </div>
+          品牌：<span>{{brandName}}</span>
         </div>
         <div class="infs_list">
-          <div class="norm">
-            <span>{{Norm}}</span>
-            <span>{{normContent}}</span>
-          </div>
+          规格：<span>{{normContent}}g</span>
         </div>
         <div class="infs_list">
-          <div class="taste">{{Taste}}</div>
+          口味：
           <div class="taste_list">
             <ul>
               <li v-for="(item, index) in items" @click="selectSort($event, index)" :class="{'active':nowIndex==index}">{{item.sort}}</li>
@@ -95,13 +89,10 @@ export default {
         autoplay: 2000
       },
       /*------轮播图End------*/
-      nowPrice: '5',
-      oldPrice: '6',
-      Brand: '品牌',
+      nowPrice: 5.5,
+      oldPrice: 6,
       brandName: '日清',
-      Norm: '规格',
-      normContent: '87g',
-      Taste: '口味',
+      normContent: 87,
       items: [
 　　　　{sort:'海鲜风味'},
 　　　　{sort:'猪骨浓汤风味'},
@@ -154,6 +145,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
     body{
+      margin: 50px 0 60px 0;
       background: #f1f1f1;
     }
    .secondary_head{

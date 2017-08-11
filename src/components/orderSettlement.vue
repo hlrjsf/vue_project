@@ -47,7 +47,7 @@
             <div class="r_box">
               <div class="goods_name">{{item.productName}}</div>
               <div class="goods_brand_norm">
-                品牌：<span class="brand">{{item.productBrand}}</span>
+                品牌：<span class="brand">{{item.productBrand}}g</span>
                 规格：<span class="norm">{{item.productNorm}}</span>
               </div>
               <div class="goods_taste">
@@ -110,37 +110,37 @@ export default {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm:87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2'
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 2
         },
         {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm:87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2'  
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 2
         },
         {
           productImage:'../static/img/cart_goods.png', 
           productName:'合味道XO酱海鲜风味面',
           productBrand:'日清',
-          productNorm:'87g',
+          productNorm:87,
           productTaste: '海鲜风味',
-          productNowPrice:'5.5',
-          productOldPrice:'6',
-          productNum: '2' 
+          productNowPrice: 5.5,
+          productOldPrice: 6,
+          productNum: 2
         }
       ],
-      allNum: '6',
-      totalPrice: '33',
-      allFare: '10',
-      orderTotal: '43'
+      allNum: 6,
+      totalPrice: 33,
+      allFare: 10,
+      orderTotal: 43
     }
   },
   methods: {

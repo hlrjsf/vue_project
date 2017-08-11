@@ -9,7 +9,7 @@
       <div class="cart_productList oh" v-for="(item, index) in productList">
         <div class="ckeck_btn" :class="{'selected':item.isChecked}" @click="selectGoods(item, index)"></div>
         <div class="goods_infs">
-          <div class="goods_pic" @click="selectGood(item,index)">
+          <div class="goods_pic" @click="goodsDetails">
             <img :src="item.productImage">
           </div>
           <div class="r_box" :class="{'isShow': !item.isShowRbox, 'isHide': item.isShowRbox}">
