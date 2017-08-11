@@ -53,8 +53,7 @@ export default {
     text-align: center;
  }
  .content_mian{
-  top: 50px;
-  padding: 10px;
+  padding: 0 10px;
  }
  .select_list{
   padding: 10px;

@@ -52,10 +52,6 @@ export default {
       line-height: 50px;
       text-align: center;
    }
-   .content_mian{
-    top: 50px;
-    padding: 10px;
-   }
    .select_list{
     padding: 10px;
     margin: 0 0 10px 0;
